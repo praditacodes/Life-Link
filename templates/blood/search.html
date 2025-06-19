@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Search Donors - blood-link</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="{% static 'css/custom.css' %}" rel="stylesheet" media="all">
+    <style>
+        .search-container {
+            padding: 40px 0;
+            background: #f8f9fa;
+        }
+        .search-form {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .results-container {
+            margin-top: 30px;
+        }
+        .donor-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        .donor-card:hover {
+            transform: translateY(-5px);
+        }
+        .distance-badge {
+            background: #4b6cb7;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    {% include "blood/navbar.html" %}
+
+    <div class="search-container">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 offset-md-2">
+                    <div class="search-form">
+                        <h2 class="text-center mb-4">Find Donors Near You</h2>
+                        <form method="GET" action="{% url 'search-donors' %}">
+                            <div class="form-group">
+                                <label for="bloodgroup">Blood Group</label>
+                                <select name="bloodgroup" id="bloodgroup" class="form-control">
+                                    <option value="">Select Blood Group</option>
+                                    <option value="A+">A+</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B+">B+</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="AB-">AB-</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" name="city" id="city" class="form-control" placeholder="Enter your city">
+                            </div>
+                            <div class="form-group">
+                                <label for="radius">Search Radius (km)</label>
+                                <input type="number" name="radius" id="radius" class="form-control" value="10" min="1" max="100">
+                            </div>
+                            <button type="submit" class="btn btn--radius-2 btn-block">Search Donors</button>
+                        </form>
+                    </div>
+
+                    {% if donors %}
+                    <div class="results-container">
+                        <h3 class="mb-4">Found {{ donors|length }} Donors</h3>
+                        {% for donor in donors %}
+                        <div class="donor-card">
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <h4>{{ donor.get_name }}</h4>
+                                    <p class="mb-1"><strong>Blood Group:</strong> {{ donor.bloodgroup }}</p>
+                                    <p class="mb-1"><strong>Location:</strong> {{ donor.city }}, {{ donor.state }}</p>
+                                    <p class="mb-1"><strong>Contact:</strong> {{ donor.mobile }}</p>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <span class="distance-badge">{{ donor.distance|floatformat:1 }} km away</span>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% elif request.GET %}
+                    <div class="alert alert-info mt-4">
+                        No donors found matching your criteria.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include "blood/footer.html" %}
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html> 

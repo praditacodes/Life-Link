@@ -1,0 +1,54 @@
+{% extends 'donor/donorbase.html' %}
+{% block content %}
+<br><br>
+<div class="container">
+    <h2 class="text-center mb-4">Donor Dashboard</h2>
+    <p class="text-center mb-5">Welcome to your dashboard! Here you can track your blood donation requests and their statuses.</p>
+    <div class="row">
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card shadow rounded bg-light h-100">
+                <div class="card-body text-center">
+                    <div class="blood mb-2">
+                        <i class="fas fa-sync-alt fa-2x text-primary"></i>
+                    </div>
+                    <h5 class="card-title">Request Made</h5>
+                    <p class="card-text display-6">{{requestmade}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card shadow rounded bg-light h-100">
+                <div class="card-body text-center">
+                    <div class="blood mb-2">
+                        <i class="fas fa-sync fa-2x text-warning"></i>
+                    </div>
+                    <h5 class="card-title">Pending Request</h5>
+                    <p class="card-text display-6">{{requestpending}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card shadow rounded bg-light h-100">
+                <div class="card-body text-center">
+                    <div class="blood mb-2">
+                        <i class="fas fa-check-circle fa-2x text-success"></i>
+                    </div>
+                    <h5 class="card-title">Approved Request</h5>
+                    <p class="card-text display-6">{{requestapproved}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card shadow rounded bg-light h-100">
+                <div class="card-body text-center">
+                    <div class="blood mb-2">
+                        <i class="fas fa-times-circle fa-2x text-danger"></i>
+                    </div>
+                    <h5 class="card-title">Rejected Request</h5>
+                    <p class="card-text display-6">{{requestrejected}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
